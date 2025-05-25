@@ -273,11 +273,14 @@ runs:
         & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /fd sha256 /tr http://ts.ssl.com /f certificate\certificate.pfx /p '${{ inputs.sign-windows-cert-password }}' .\build\bin\${{inputs.build-name}}.exe
         echo "Signing Installer" & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /fd sha256 /tr http://ts.ssl.com /f certificate\certificate.pfx /p '${{ inputs.sign-windows-cert-password }}' .\build\bin\${{inputs.build-name}}-amd64-installer.exe
 
+    - name: Substitute slashes in build-platform name
+      run: |
+        echo "ARTIFACT_NAME=${{ inputs.build-platform//\//_ }}" >> $GITHUB_ENV
     # Upload build assets
     - uses: actions/upload-artifact@v4
       if: inputs.package == 'true'
       with:
-        name: Wails Build ${{runner.os}} ${{inputs.build-name}} ${{inputs.build-platform}}
+        name: Wails Build ${{runner.os}} ${{inputs.build-name}} ${{env.ARTIFACT_NAME}}
         path: |
           */bin/
           *\bin\*
