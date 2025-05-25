@@ -277,7 +277,7 @@ runs:
     - uses: actions/upload-artifact@v4
       if: inputs.package == 'true'
       with:
-        name: Wails Build ${{runner.os}} ${{inputs.build-name}}
+        name: Wails Build ${{runner.os}} ${{inputs.build-name}} ${{inputs.build-platform}}
         path: |
           */bin/
           *\bin\*
