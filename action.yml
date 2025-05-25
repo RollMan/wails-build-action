@@ -278,6 +278,7 @@ runs:
         echo "ARTIFACT_NAME=${INPUT_BUILD_PLATFORM//\//_}" >> $GITHUB_OUTPUT
       env:
         INPUT_BUILD_PLATFORM: ${{ inputs.build-platform }}
+      shell: bash
     # Upload build assets
     - uses: actions/upload-artifact@v4
       if: inputs.package == 'true'
